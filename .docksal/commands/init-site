@@ -58,6 +58,8 @@ fix_permissions ()
 # Install site
 site_install ()
 {
+	mkdir private
+	mkdir config
 	cd $DOCROOT_PATH
 
 	# We disable email sending here so site-install does not return an error
