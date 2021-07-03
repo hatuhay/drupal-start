@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+#: exec_target = cli
+
+## Initialize/reinstall site
+##
+## Usage: fin init-site
+
+# Abort if anything fails
+set -e
+
+#-------------------------- Settings --------------------------------
+
+# PROJECT_ROOT and DOCROOT are set as env variables in cli
+SITE_DIRECTORY="default"
+DOCROOT_PATH="${PROJECT_ROOT}/${DOCROOT}"
+SITEDIR_PATH="${DOCROOT_PATH}/sites/${SITE_DIRECTORY}"
+
+#-------------------------- END: Settings --------------------------------
+
+#-------------------------- Helper functions --------------------------------
+
+# Copy a settings file.
+# Skips if the destination file already exists.
+# @param $1 source file
+# @param $2 destination file
+copy_settings_file()
+{
+	local source="$1"
+	local dest="$2"
+
+	if [[ ! -f $dest ]]; then
+		echo "Copying ${dest}..."
+		cp $source $dest
+	else
+		echo "${dest} already in place."
+	fi
+}
+
+#-------------------------- END: Helper functions --------------------------------
+
+#-------------------------- Functions --------------------------------
+
+# Initialize local settings files
+init_settings ()
+{
+	# Copy from settings templates
+	copy_settings_file "${SITEDIR_PATH}/default.settings.local.php" "${SITEDIR_PATH}/settings.local.php"
+}
+
+# Fix file/folder permissions
+fix_permissions ()
+{
+	echo "Making site directory writable..."
+	chmod 755 "${SITEDIR_PATH}"
+}
+
+# Install site
+site_install ()
+{
+	cd $DOCROOT_PATH
+
+	# We disable email sending here so site-install does not return an error
+	# Credit: https://www.drupal.org/project/phpconfig/issues/1826652#comment-12071700
+	drush site-install standard -y \
+		install_configure_form.enable_update_status_module=NULL \
+		--site-name='My Drupal 9 Site'
+}
+
+#-------------------------- END: Functions --------------------------------
+
+#-------------------------- Execution --------------------------------
+
+# Project initialization steps
+fix_permissions
+init_settings
+time site_install
+
+echo -e "Open ${yellow}http://${VIRTUAL_HOST}${NC} in your browser to verify the setup."
+
+#-------------------------- END: Execution --------------------------------
