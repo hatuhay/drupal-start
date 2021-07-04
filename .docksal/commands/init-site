@@ -124,6 +124,7 @@ post_install ()
 	sed -i -e "s/SASS Bootstrap Starter Kit Subtheme/$CUSTOM_BOOTSTRAP_SASS_NAME/" $CUSTOM_BOOTSTRAP_SASS.info.yml
 	echo "# Check the themes/custom folder for your new sub-theme."
 	drush en $CUSTOM_BOOTSTRAP_SASS
+	npm install
 }
 #-------------------------- END: Functions --------------------------------
 
