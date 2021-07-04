@@ -13,7 +13,7 @@ set -e
 
 # PROJECT_ROOT and DOCROOT are set as env variables in cli
 SITE_DIRECTORY="default"
-DOCROOT_PATH="${PROJECT_ROOT}/${DOCROOT}"
+DOCROOT_PATH="${DOCROOT}"
 SITEDIR_PATH="${DOCROOT_PATH}/sites/${SITE_DIRECTORY}"
 
 #-------------------------- END: Settings --------------------------------
@@ -37,6 +37,18 @@ copy_settings_file()
 	fi
 }
 
+# Creates a folder.
+# Skips if the destination folder already exists.
+# @param $1 destination folder
+make_dir()
+{
+	local dest="$1"
+
+	if [[ ! -e $dest ]]; then
+			mkdir $dest
+	fi
+}
+
 #-------------------------- END: Helper functions --------------------------------
 
 #-------------------------- Functions --------------------------------
@@ -45,7 +57,7 @@ copy_settings_file()
 init_settings ()
 {
 	# Copy from settings templates
-	copy_settings_file "${SITEDIR_PATH}/default.settings.local.php" "${SITEDIR_PATH}/settings.local.php"
+	copy_settings_file ".docksal/settings/settings.local.php" "${SITEDIR_PATH}/settings.local.php"
 }
 
 # Fix file/folder permissions
@@ -58,11 +70,12 @@ fix_permissions ()
 # Install site
 site_install ()
 {
-	mkdir private
-	mkdir config
-  mkdir -p ${SITEDIR_PATH}/libraries/bootstrap
-  cp -R vendor/twbs/bootstrap/dist ${SITEDIR_PATH}/libraries/bootstrap
+	echo "Creating auxiliary folders..."
+	make_dir "private"
+	make_dir "config"
 	cd $DOCROOT_PATH
+	make_dir "libraries/bootstrap"
+  cp -R -f ../vendor/twbs/bootstrap/dist ./libraries/bootstrap
 
 	# We disable email sending here so site-install does not return an error
 	# Credit: https://www.drupal.org/project/phpconfig/issues/1826652#comment-12071700
@@ -78,9 +91,39 @@ site_install ()
 post_install ()
 {
 	# We install the barrio subtheme from bootstrap sass starter.
-	chmod +x ${SITEDIR_PATH}/themes/contrib/bootstrap_sass/scripts/create_subtheme.sh
-	# Run script with interactive prompts.
-	${SITEDIR_PATH}/themes/contrib/bootstrap_sass/scripts/create_subtheme.sh
+	cd ./themes/contrib/bootstrap_sass
+	# Script to quickly create sub-theme.
+
+	echo '
+	+------------------------------------------------------------------------+
+	| With this script you could quickly create sass_subtheme sub-theme     |
+	| In order to use this:                                                  |
+	| - sass_subtheme theme (this folder) should be in the contrib folder   |
+	+------------------------------------------------------------------------+
+	'
+	echo 'The machine name of your custom theme? [e.g. mycustom_sass_subtheme]'
+	read CUSTOM_BOOTSTRAP_SASS
+
+	echo 'Your theme name ? [e.g. My custom sass_subtheme]'
+	read CUSTOM_BOOTSTRAP_SASS_NAME
+
+	if [[ ! -e ../../custom ]]; then
+			mkdir ../../custom
+	fi
+	cd ../../custom
+	cp -r ../contrib/bootstrap_sass $CUSTOM_BOOTSTRAP_SASS
+	cd $CUSTOM_BOOTSTRAP_SASS
+	for file in *bootstrap_sass.*; do mv $file ${file//bootstrap_sass/$CUSTOM_BOOTSTRAP_SASS}; done
+	for file in config/*/*bootstrap_sass.*; do mv $file ${file//bootstrap_sass/$CUSTOM_BOOTSTRAP_SASS}; done
+
+	# Remove create_subtheme.sh file, we do not need it in customized subtheme.
+	rm scripts/create_subtheme.sh
+
+	# mv {_,}$CUSTOM_BOOTSTRAP_SASS.theme
+	grep -Rl bootstrap_sass .|xargs sed -i -e "s/bootstrap_sass/$CUSTOM_BOOTSTRAP_SASS/"
+	sed -i -e "s/SASS Bootstrap Starter Kit Subtheme/$CUSTOM_BOOTSTRAP_SASS_NAME/" $CUSTOM_BOOTSTRAP_SASS.info.yml
+	echo "# Check the themes/custom folder for your new sub-theme."
+	drush en $CUSTOM_BOOTSTRAP_SASS
 }
 #-------------------------- END: Functions --------------------------------
 
