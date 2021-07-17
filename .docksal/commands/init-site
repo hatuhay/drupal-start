@@ -113,18 +113,21 @@ post_install ()
 	cd ../../custom
 	cp -r ../contrib/bootstrap_sass $CUSTOM_BOOTSTRAP_SASS
 	cd $CUSTOM_BOOTSTRAP_SASS
+	echo "${green}# Installing required subtheme modules${NC}"
+	npm install
 	for file in *bootstrap_sass.*; do mv $file ${file//bootstrap_sass/$CUSTOM_BOOTSTRAP_SASS}; done
 	for file in config/*/*bootstrap_sass.*; do mv $file ${file//bootstrap_sass/$CUSTOM_BOOTSTRAP_SASS}; done
 
 	# Remove create_subtheme.sh file, we do not need it in customized subtheme.
 	rm scripts/create_subtheme.sh
 
-	# mv {_,}$CUSTOM_BOOTSTRAP_SASS.theme
-	grep -Rl bootstrap_sass .|xargs sed -i -e "s/bootstrap_sass/$CUSTOM_BOOTSTRAP_SASS/"
 	sed -i -e "s/SASS Bootstrap Starter Kit Subtheme/$CUSTOM_BOOTSTRAP_SASS_NAME/" $CUSTOM_BOOTSTRAP_SASS.info.yml
-	echo "# Check the themes/custom folder for your new sub-theme."
-	drush en $CUSTOM_BOOTSTRAP_SASS
-	npm install
+	grep -Rl bootstrap_sass .|xargs sed -i -e "s/bootstrap_sass/$CUSTOM_BOOTSTRAP_SASS/" || true
+
+	echo "${green}# Check the themes/custom folder for your new sub-theme.${NC}"
+
+ 	drush theme-enable $CUSTOM_BOOTSTRAP_SASS
+	drush config-set system.theme default $CUSTOM_BOOTSTRAP_SASS
 }
 #-------------------------- END: Functions --------------------------------
 
