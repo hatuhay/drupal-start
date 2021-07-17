@@ -1,4 +1,4 @@
-uuid: dc104193-8dc1-44f1-9c5c-63363b8435df
+uuid: d135a286-f984-448d-b468-f5927bcf8bb9
 langcode: es
 status: true
 dependencies:
@@ -13,7 +13,7 @@ id: node.article.body
 field_name: body
 entity_type: node
 bundle: article
-label: Cuerpo
+label: Body
 description: ''
 required: false
 translatable: true

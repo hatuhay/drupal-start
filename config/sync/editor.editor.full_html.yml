@@ -1,4 +1,4 @@
-uuid: 78dfaec3-a72c-46a5-83e9-2a8e43ffd3fa
+uuid: 3e030144-4f22-4e2a-b61a-0a5a9c580807
 langcode: es
 status: true
 dependencies:
@@ -6,6 +6,14 @@ dependencies:
     - filter.format.full_html
   module:
     - ckeditor
+    - editor_file
+third_party_settings:
+  editor_file:
+    status: true
+    scheme: public
+    directory: inline-files
+    extensions: pdf
+    max_size: ''
 _core:
   default_config_hash: 967ijj7p6i7rwrYl7r08WQFeCY_c23YAh0h8u-w_CXM
 format: full_html
@@ -19,6 +27,7 @@ settings:
           items:
             - Bold
             - Italic
+            - Underline
             - Strike
             - Superscript
             - Subscript
@@ -39,7 +48,9 @@ settings:
           items:
             - Blockquote
             - DrupalImage
+            - DrupalFile
             - Table
+            - url
             - HorizontalRule
         -
           name: 'Block Formatting'
@@ -50,14 +61,31 @@ settings:
           items:
             - ShowBlocks
             - Source
+        -
+          name: Edit
+          items:
+            - Cut
+            - Copy
+            - Paste
+            - PasteText
+            - PasteFromWord
+        -
+          name: Justify
+          items:
+            - JustifyLeft
+            - JustifyCenter
+            - JustifyRight
+            - JustifyBlock
   plugins:
     stylescombo:
       styles: ''
+    language:
+      language_list: un
 image_upload:
   status: true
   scheme: public
   directory: inline-images
   max_size: ''
   max_dimensions:
-    width: 0
-    height: 0
+    width: null
+    height: null

@@ -1,11 +1,10 @@
-uuid: 9356b8e7-bb05-4995-924c-c0150b3149c4
+uuid: 76285f4e-7829-42fe-b476-b4b1013fe896
 langcode: es
 status: true
 dependencies:
   config:
     - field.field.node.article.body
     - field.field.node.article.field_image
-    - field.field.node.article.field_tags
     - image.style.large
     - node.type.article
   module:
@@ -19,6 +18,11 @@ targetEntityType: node
 bundle: article
 mode: default
 content:
+  addtoany:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   body:
     type: text_default
     weight: 0
@@ -35,14 +39,6 @@ content:
       image_link: ''
     third_party_settings: {  }
     label: hidden
-  field_tags:
-    type: entity_reference_label
-    weight: 10
-    region: content
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
   links:
     weight: 100
     region: content

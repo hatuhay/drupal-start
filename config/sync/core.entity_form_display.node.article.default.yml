@@ -1,11 +1,10 @@
-uuid: 15230e67-b4c7-4b34-a268-1a016810cbe7
+uuid: 94fdc9aa-b761-4adf-94a3-cfe9a8fb7d26
 langcode: es
 status: true
 dependencies:
   config:
     - field.field.node.article.body
     - field.field.node.article.field_image
-    - field.field.node.article.field_tags
     - image.style.thumbnail
     - node.type.article
   module:
@@ -42,16 +41,6 @@ content:
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
-    third_party_settings: {  }
-  field_tags:
-    type: entity_reference_autocomplete_tags
-    weight: 3
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   langcode:
     type: language_select

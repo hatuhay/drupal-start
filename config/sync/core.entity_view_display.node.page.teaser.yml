@@ -1,4 +1,4 @@
-uuid: e15cf6d8-b7b0-4e00-ac00-b41e24531a0c
+uuid: 97c1e2fa-b309-47c7-83d4-33a848a7a08c
 langcode: es
 status: true
 dependencies:
@@ -16,6 +16,11 @@ targetEntityType: node
 bundle: page
 mode: teaser
 content:
+  addtoany:
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   body:
     label: hidden
     type: text_summary_or_trimmed

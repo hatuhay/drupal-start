@@ -1,4 +1,4 @@
-uuid: 54ab6cdd-d280-43df-888b-acf4be287410
+uuid: 4b3f6963-d137-4835-97b9-c8d49b9aba41
 langcode: es
 status: true
 dependencies: {  }
@@ -7,6 +7,9 @@ _core:
 id: node
 label: Content
 tags:
-  title: '[node:title] | [site:name]'
   description: '[node:summary]'
+  abstract: '[node:summary]'
   canonical_url: '[node:url]'
+  title: '[node:title] | [site:name]'
+  dcterms_description: '[node:summary]'
+  dcterms_subject: '[node:title] | [site:name]'

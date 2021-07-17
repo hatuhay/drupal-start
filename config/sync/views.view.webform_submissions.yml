@@ -1,4 +1,4 @@
-uuid: 3505e57e-85ed-43bd-af1f-3172de587d15
+uuid: bff5ac90-6951-4995-9b0f-61335bf98877
 langcode: es
 status: true
 dependencies:
@@ -1109,7 +1109,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Completed
+          label: Completado
           exclude: false
           alter:
             alter_text: false
@@ -1920,7 +1920,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Completed
+          label: Completado
           exclude: false
           alter:
             alter_text: false
@@ -2754,7 +2754,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Completed
+          label: Completado
           exclude: false
           alter:
             alter_text: false

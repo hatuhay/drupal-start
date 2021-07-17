@@ -1,4 +1,4 @@
-uuid: e5f46d0e-b8f0-4b26-a5a9-a1ae99494aba
+uuid: d869c5f8-6af4-4b55-b434-7c0e9de09911
 langcode: es
 status: true
 dependencies:
@@ -6,7 +6,6 @@ dependencies:
     - core.entity_view_mode.node.rss
     - field.field.node.article.body
     - field.field.node.article.field_image
-    - field.field.node.article.field_tags
     - node.type.article
   module:
     - user
@@ -21,7 +20,7 @@ content:
     weight: 100
     region: content
 hidden:
+  addtoany: true
   body: true
   field_image: true
-  field_tags: true
   langcode: true

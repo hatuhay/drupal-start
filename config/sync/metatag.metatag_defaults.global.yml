@@ -1,4 +1,4 @@
-uuid: 6872fae6-c57a-4551-a943-d25e7c10c283
+uuid: 9a93a618-534f-44af-a28b-c54a88906333
 langcode: es
 status: true
 dependencies: {  }
@@ -9,3 +9,4 @@ label: Global
 tags:
   canonical_url: '[current-page:url]'
   title: '[current-page:title] | [site:name]'
+  dcterms_title: '[site:name]'
