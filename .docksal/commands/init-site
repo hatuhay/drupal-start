@@ -83,7 +83,7 @@ site_install ()
 
 	# We disable email sending here so site-install does not return an error
 	# Credit: https://www.drupal.org/project/phpconfig/issues/1826652#comment-12071700
-	drush site-install --existing-config -y \
+	drush site-install --existing-config minimal -y \
 		install_configure_form.enable_update_status_module=NULL \
 		--site-name='My Drupal 9 Site' \
 		--db-url=mysql://user:user@db/default \
