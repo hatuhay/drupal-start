@@ -1,7 +1,7 @@
 # Drupal Bootstrap Barrio Docksal Boilerplate
 Set Drupal 9 Docksal intallation enabling basic set of modules.
 Create a Custom Bootstrap Barrio subtheme and enable it
-## Instalation
+## Installation
 - Clone this repository on a docksal enabled environment.
 - Rename drupal-start folder to your own needs
 - Edit /.docksal/comands/init-site to your own needs. Line 86 handles Drupal installation.
