@@ -16,6 +16,10 @@ SITE_DIRECTORY="default"
 DOCROOT_PATH="${DOCROOT}"
 SITEDIR_PATH="${DOCROOT_PATH}/sites/${SITE_DIRECTORY}"
 
+# Console colors
+green='\033[0;32m'
+yellow='\033[1;33m'
+
 #-------------------------- END: Settings --------------------------------
 
 #-------------------------- Helper functions --------------------------------
@@ -74,12 +78,12 @@ site_install ()
 	make_dir "private"
 	make_dir "config"
 	cd $DOCROOT_PATH
-	make_dir "libraries/bootstrap"
+	make_dir "libraries"
   cp -R -f ../vendor/twbs/bootstrap/dist ./libraries/bootstrap
 
 	# We disable email sending here so site-install does not return an error
 	# Credit: https://www.drupal.org/project/phpconfig/issues/1826652#comment-12071700
-	drush site-install standard -y \
+	drush site-install --existing-config -y \
 		install_configure_form.enable_update_status_module=NULL \
 		--site-name='My Drupal 9 Site' \
 		--db-url=mysql://user:user@db/default \
@@ -127,7 +131,7 @@ post_install ()
 	echo "${green}# Check the themes/custom folder for your new sub-theme.${NC}"
 
  	drush theme-enable $CUSTOM_BOOTSTRAP_SASS
-	drush config-set system.theme default $CUSTOM_BOOTSTRAP_SASS
+	drush config-set system.theme default $CUSTOM_BOOTSTRAP_SASS -y
 }
 #-------------------------- END: Functions --------------------------------
 
