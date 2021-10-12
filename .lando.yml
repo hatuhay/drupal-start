@@ -1,0 +1,18 @@
+name: drupal-start
+recipe: drupal9
+config:
+  webroot: web
+  php: '7.4'
+  composer_version: 1.10.17
+  database: mysql:5.7
+  drush: ^10
+  config:
+    php: lando_config/php/php.ini
+    database: lando_config/mysql/my.cnf
+proxy:
+  appserver:
+    - drupal-start.lndo.site
+  mailhog:
+    - mail.drupal-start.lndo.site
+  phpmysql:
+    - phpmysql.drupal-start.lndo.site
